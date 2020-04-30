@@ -29,12 +29,11 @@
         <table>
             <c:forEach var="ccStatus" items="${ccList}">
                 <tr>
-                    <td>${ccStatus.client}</td>
-                    <td>${ccStatus.sku}</td>
-                    <td>${ccStatus.lot}</td>
-                    <td>${ccStatus.loc}</td>
+                    <td>${ccStatus.storerSkuPK.storerKey}</td>
+                    <td>${ccStatus.storerSkuPK.sku}</td>
+
                     <td>${ccStatus.lastCycleCount}</td>
-                    <td>${ccStatus.lastCCReleaseDate}</td>
+                    <td>${ccStatus.lastCcReleaseDate}</td>
                 </tr>
             </c:forEach>
         </table>

@@ -1,34 +1,38 @@
 package com.inventorysolution.inventory.beans;
 
-import com.inventorysolution.inventory.beans.compositeId.SkuLotLoc;
-
 import javax.persistence.*;
+/*
 
-@Entity
-@IdClass(SkuLotLoc.class)
+@Entity (name = "CycleCountDashboard")
 @Table(name = "LOTXLOCXID")
-@SecondaryTable(name = "SKU")
 public class CycleCountDashboard {
 
-    private int client;
+
     @Id
-    private String sku;
-    @Id
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(
+                    name = "Client",
+                    referencedColumnName = "StorerKey"),
+            @JoinColumn(
+                    name = "Sku",
+                    referencedColumnName = "Sku")
+            })
+    private ClientSkuCcInfo clientSkuCcInfo;
     private int lot;
-    @Id
     private String loc;
+    private int qty;
 
-    /*
-    @Column(table = "SKU")
-    private String lastCycleCount;
-    @Column(table = "SKU")
-    private String lastCCReleaseDate;
-*/
-    public int getClient() { return client; }
-    public String getSku() { return sku; }
+    public ClientSkuCcInfo getClientSkuCcInfo() { return clientSkuCcInfo; }
+    public void setClientSkuCcInfo(ClientSkuCcInfo clientSkuCcInfo) { this.clientSkuCcInfo = clientSkuCcInfo; }
+
     public int getLot() { return lot; }
-    public String getLoc() { return loc; }
-    //public String getLastCycleCount() { return lastCycleCount; }
-    //public String getLastCCReleaseDate() { return lastCCReleaseDate; }
+    public void setLot(int lot) { this.lot = lot; }
 
+    public String getLoc() { return loc; }
+    public void setLoc(String loc) { this.loc = loc; }
+
+    public int getQty() { return qty; }
+    public void setQty(int qty) { this.qty = qty; }
 }
+*/
