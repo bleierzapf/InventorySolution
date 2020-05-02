@@ -1,38 +1,30 @@
 package com.inventorysolution.inventory.beans;
-
-import javax.persistence.*;
 /*
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-@Entity (name = "CycleCountDashboard")
-@Table(name = "LOTXLOCXID")
+@Entity
 public class CycleCountDashboard {
 
-
     @Id
+    int id;
+
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "Client",
-                    referencedColumnName = "StorerKey"),
-            @JoinColumn(
-                    name = "Sku",
-                    referencedColumnName = "Sku")
-            })
-    private ClientSkuCcInfo clientSkuCcInfo;
-    private int lot;
-    private String loc;
-    private int qty;
+    @JoinColumn(name = "sku")
+    InvOnHand invOnHand;
+
+    @ManyToOne
+    @JoinColumn(name = "sku")
+    ClientSkuCcInfo clientSkuCcInfo;
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public InvOnHand getInvOnHand() { return invOnHand; }
+    public void setInvOnHand(InvOnHand invOnHand) { this.invOnHand = invOnHand; }
 
     public ClientSkuCcInfo getClientSkuCcInfo() { return clientSkuCcInfo; }
     public void setClientSkuCcInfo(ClientSkuCcInfo clientSkuCcInfo) { this.clientSkuCcInfo = clientSkuCcInfo; }
-
-    public int getLot() { return lot; }
-    public void setLot(int lot) { this.lot = lot; }
-
-    public String getLoc() { return loc; }
-    public void setLoc(String loc) { this.loc = loc; }
-
-    public int getQty() { return qty; }
-    public void setQty(int qty) { this.qty = qty; }
-}
-*/
+}*/

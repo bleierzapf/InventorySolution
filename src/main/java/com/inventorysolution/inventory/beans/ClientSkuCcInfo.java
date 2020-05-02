@@ -2,21 +2,34 @@ package com.inventorysolution.inventory.beans;
 
 import com.inventorysolution.inventory.beans.compositeId.StorerSkuPK;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 @Entity(name = "ClientSkuCcInfo")
 @Table(name = "SKU")
-public class ClientSkuCcInfo {
+public class ClientSkuCcInfo implements Serializable {
 
-    @EmbeddedId
-    private StorerSkuPK storerSkuPK;
+    @Id
+    @Column(name = "serialKey")
+    private int serialKey;
+    @Column(name = "storerKey")
+    private int storerKey;
+    @Column(name = "sku")
+    private String sku;
+    @Column(name = "lastCycleCount")
     private String lastCycleCount;
+    @Column(name = "lastCcReleaseDate")
     private String lastCcReleaseDate;
 
-    public StorerSkuPK getStorerSkuPK() { return storerSkuPK; }
-    public void setStorerSkuPK(StorerSkuPK id) { this.storerSkuPK = storerSkuPK; }
+    public int getSerialKey() { return serialKey; }
+    public void setSerialKey(int serialKey) { this.serialKey = serialKey; }
+
+    public int getStorerKey() { return storerKey; }
+    public void setStorerKey(int storerKey) { this.storerKey = storerKey; }
+
+    public String getSku() { return sku; }
+    public void setSku(String sku) { this.sku = sku; }
 
     public String getLastCycleCount() { return lastCycleCount; }
     public void setLastCycleCount(String lastCycleCount) { this.lastCycleCount = lastCycleCount; }

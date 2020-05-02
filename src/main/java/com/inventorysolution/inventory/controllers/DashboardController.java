@@ -1,16 +1,13 @@
 package com.inventorysolution.inventory.controllers;
 
-import com.inventorysolution.inventory.beans.ClientSkuCcInfo;
-//import com.inventorysolution.inventory.beans.CycleCountDashboard;
-import com.inventorysolution.inventory.repository.CycleCountDashboardRepository;
+import com.inventorysolution.inventory.beans.InvOnHand;
+import com.inventorysolution.inventory.repository.InvOnHandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class DashboardController {
@@ -19,15 +16,14 @@ public class DashboardController {
     DataSource dataSource;
 
     @Autowired
-    private CycleCountDashboardRepository cycleCountDashboardRepository;
+    private InvOnHandRepository invOnHandRepository;
 
     @GetMapping("/displayDashboard")
-    public String displayDashboard(ClientSkuCcInfo clientSkuCcInfo, Model model){
+    public String displayDashboard(InvOnHand invOnHand, Model model){
         System.out.println("Display Dashboard");
 
-        List<ClientSkuCcInfo> ccList = new ArrayList<>();
-        ccList = cycleCountDashboardRepository.getCcStats();
-        model.addAttribute("ccList", ccList);
+        Iterable<InvOnHand> onHandList = invOnHandRepository.findAll();
+        model.addAttribute("onHandList", onHandList);
         return "dashboard";
     }
 

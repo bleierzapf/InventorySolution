@@ -24,36 +24,21 @@
         </form>
     </div>
 </section>
-<c:if test="${!empty(ccList)}">
+<c:if test="${!empty(onHandList)}">
     <section>
         <table>
-            <c:forEach var="ccStatus" items="${ccList}">
+            <c:forEach var="onHand" items="${onHandList}">
                 <tr>
-                    <td>${ccStatus.storerSkuPK.storerKey}</td>
-                    <td>${ccStatus.storerSkuPK.sku}</td>
-
-                    <td>${ccStatus.lastCycleCount}</td>
-                    <td>${ccStatus.lastCcReleaseDate}</td>
+                    <td>${onHand.client}</td>
+                    <td>${onHand.skuLotLocPK.sku}</td>
+                    <td>${onHand.skuLotLocPK.lot}</td>
+                    <td>${onHand.skuLotLocPK.loc}</td>
+                    <td>${onHand.qty}</td>
+                    <td>${onHand.clientSkuCcInfo.lastCycleCount}</td>
                 </tr>
             </c:forEach>
         </table>
     </section>
 </c:if>
-<!--
-<c:if test="${!empty(skuList)}">
-    <section>
-        <table>
-        <c:forEach var="sku" items="${skuList}">
-            <tr>
-                <td>${sku.storerKey}</td>
-                <td>${sku.sku}</td>
-                <td>${sku.abc}</td>
-                <td>${sku.putAwayLoc}</td>
-            </tr>
-        </c:forEach>
-        </table>
-    </section>
-</c:if>
--->
 </body>
 </html>
