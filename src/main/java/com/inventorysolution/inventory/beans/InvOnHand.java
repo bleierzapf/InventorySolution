@@ -1,6 +1,8 @@
 package com.inventorysolution.inventory.beans;
 
 import com.inventorysolution.inventory.beans.compositeId.SkuLotLocPK;
+import com.inventorysolution.inventory.convertors.DateStringConverter;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +11,8 @@ import java.util.Set;
 @Entity (name = "InvOnHand")
 @Table (name = "LOTXLOCXID")
 public class InvOnHand {
+
+    //transient boolean selected;
 
     @Column(name = "client")
     private int client;
@@ -35,4 +39,5 @@ public class InvOnHand {
 
     public ClientSkuCcInfo getClientSkuCcInfo() { return clientSkuCcInfo; }
     public void setClientSkuCcInfo(ClientSkuCcInfo clientSkuCcInfo) { this.clientSkuCcInfo = clientSkuCcInfo; }
+
 }
