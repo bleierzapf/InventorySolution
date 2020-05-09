@@ -54,19 +54,16 @@ public class ClientSkuCcInfo implements Serializable {
     public void setAbc(ABC abc) { this.abc = abc; }
 
     @Formula("calcDaysSinceLastCount")
-    transient int daysSinceLastCount;
+    transient long daysSinceLastCount;
 
-    public int getDaysSinceLastCount() { return daysSinceLastCount; }
-    public void setDaysSinceLastCount(int daysSinceLastCount) { this.daysSinceLastCount = daysSinceLastCount; }
+    public long getDaysSinceLastCount() { return daysSinceLastCount; }
+    public void setDaysSinceLastCount(long daysSinceLastCount) { this.daysSinceLastCount = daysSinceLastCount; }
 
     @PostLoad
     protected void calcDaysSinceLastCount(){
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date date = new Date();
         Timestamp ts = new Timestamp(date.getTime());
-        //setDaysSinceLastCount(Days.days (getLastCycleCount().getTime() - ts.getTime()));
-        setDaysSinceLastCount((int) (getLastCycleCount().getTime() - ts.getTime()) / (1000*60*60*24));
+        setDaysSinceLastCount((long) (getLastCycleCount().getTime() - ts.getTime()) / (1000*3500*24));
     }
-
-
 }

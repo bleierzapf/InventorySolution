@@ -19,27 +19,34 @@
 
 <b>Dashboard</b>
 
-<section id="result" class="result">
-    <div class="container">
-        <form action="/displayDashboard" method="get">
-            <input type="submit" value="result">
-        </form>
-    </div>
-</section>
-<c:if test="${!empty(onHandList)}">
+<section id="cCSelectionTable" class="cCSelectionTable">
+    <table>
+        <form:form method="get" action="/displayDashboard">
+        <tr>
+            <th><input type="checkbox" /></th>
+            <th>Client</th>
+            <th>SKU</th>
+            <th>Lot</th>
+            <th>Location</th>
+            <th>Qty</th>
+            <th>Last Count Date</th>
+            <th>Cycle Count Days</th>
+            <th>Days Since Last Count</th>
+        </tr>
+        <tr>
+            <th><input type="submit" value="Search" id="search" /></th>
+            <th>Client</th>
+            <th>SKU</th>
+            <th>Lot</th>
+            <th>Location</th>
+            <th>Qty</th>
+            <th>Last Count Date</th>
+            <th>Cycle Count Days</th>
+            <th>Days Since Last Count</th>
+        </tr>
+        </form:form>
+    <c:if test="${!empty(onHandList)}">
     <section>
-        <table>
-            <tr>
-                <th><input type="checkbox" /></th>
-                <th>Client</th>
-                <th>SKU</th>
-                <th>Lot</th>
-                <th>Location</th>
-                <th>Qty</th>
-                <th>Last Count Date</th>
-                <th>Cycle Count Days</th>
-                <th>Days Since Last Count</th>
-            </tr>
             <c:forEach var="onHand" items="${onHandList}">
                 <tr>
                     <td><input type="checkbox" /></td>
@@ -53,8 +60,10 @@
                     <td>${onHand.clientSkuCcInfo.daysSinceLastCount}</td>
                 </tr>
             </c:forEach>
-        </table>
     </section>
 </c:if>
+    </table>
+</section>
+
 </body>
 </html>
