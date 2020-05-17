@@ -1,4 +1,4 @@
-package com.inventorysolution.inventory.beans.compositeId;
+package com.inventorysolution.inventory.model.compositeId;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

@@ -1,4 +1,4 @@
-package com.inventorysolution.inventory.beans;
+package com.inventorysolution.inventory.model;
 
 import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -61,7 +61,7 @@ public class ClientSkuCcInfo implements Serializable {
 
     @PostLoad
     protected void calcDaysSinceLastCount(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date date = new Date();
         Timestamp ts = new Timestamp(date.getTime());
         setDaysSinceLastCount((long) (getLastCycleCount().getTime() - ts.getTime()) / (1000*3500*24));

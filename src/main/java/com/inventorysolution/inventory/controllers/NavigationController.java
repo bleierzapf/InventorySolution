@@ -1,8 +1,7 @@
 package com.inventorysolution.inventory.controllers;
 
-import com.inventorysolution.inventory.beans.InvOnHand;
+import com.inventorysolution.inventory.model.InvOnHand;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -55,6 +54,12 @@ public class NavigationController {
     public String skuImport(){
         System.out.println("Load Sku Import");
         return "skuImport";
+    }
+
+    @GetMapping("/tasks")
+    public String tasks(){
+        System.out.println("Load Tasks");
+        return "tasks";
     }
 
     @ModelAttribute("selectedCount")

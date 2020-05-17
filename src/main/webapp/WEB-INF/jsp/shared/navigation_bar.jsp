@@ -20,7 +20,7 @@
                         <a href="/cycleCountManualImport">Cycle Count Manual Import</a>
                 </div> <!-- dropdown menu -->
             </div> <!-- dropdown -->
-            <a href="#">field4</a>
+            <a href="/tasks/viewAllTasks">Tasks</a>
             <a href="/settings">Settings</a>
         </div> <!-- navbar -->
         <div class="logo">

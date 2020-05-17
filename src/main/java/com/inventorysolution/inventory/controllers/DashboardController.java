@@ -1,11 +1,10 @@
 package com.inventorysolution.inventory.controllers;
 
-import com.inventorysolution.inventory.beans.InvOnHand;
+import com.inventorysolution.inventory.model.InvOnHand;
 import com.inventorysolution.inventory.repository.InvOnHandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,7 +19,7 @@ public class DashboardController {
     @Autowired
     private InvOnHandRepository invOnHandRepository;
 
-    @RequestMapping(value = "/displayDashboard", method = RequestMethod.GET)
+    @RequestMapping(value = "displayDashboard", method = RequestMethod.GET)
     public String displayDashboard(InvOnHand invOnHand, Model model){
         System.out.println("Display Dashboard");
 

@@ -1,4 +1,4 @@
-package com.inventorysolution.inventory.beans;
+package com.inventorysolution.inventory.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -1,14 +1,9 @@
 <!DOCTYPE html>
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ include file="shared/tagLibaray.jsp"%>
 
 <head>
-    <meta charset="UTF-8">
-    <title>HPlus</title>
-    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSqrd Solution - Dashboard</title>
+    <%@ include file="shared/head.jsp"%>
 </head>
 
 <body>

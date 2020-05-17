@@ -74,3 +74,9 @@ table, tr {
 table {
     border-collapse: collapse;
 }
+
+.tableCheckBox {
+    display: block;
+    text-align: center;
+    margin: auto;
+}

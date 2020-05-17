@@ -1,12 +1,8 @@
-package com.inventorysolution.inventory.beans;
+package com.inventorysolution.inventory.model;
 
-import com.inventorysolution.inventory.beans.compositeId.SkuLotLocPK;
-import com.inventorysolution.inventory.convertors.DateStringConverter;
-import org.hibernate.annotations.Formula;
+import com.inventorysolution.inventory.model.compositeId.SkuLotLocPK;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Set;
 
 @Entity (name = "InvOnHand")
 @Table (name = "LOTXLOCXID")

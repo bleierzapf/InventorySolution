@@ -1,8 +1,5 @@
-package com.inventorysolution.inventory.beans;
+package com.inventorysolution.inventory.model;
 
-import com.inventorysolution.inventory.beans.compositeId.StorerSkuPK;
-
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 

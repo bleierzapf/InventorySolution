@@ -1,14 +1,9 @@
 <!DOCTYPE html>
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ include file="shared/tagLibaray.jsp"%>
 
 <head>
-    <meta charset="UTF-8">
-    <title>HPlus</title>
-    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSqrd Solution - Cycle Count Release</title>
+    <%@ include file="shared/head.jsp"%>
 </head>
 
 <body>
@@ -19,11 +14,17 @@
 
 <b>Cycle Count Release</b>
 
-<section id="cCSelectionTable" class="cCSelectionTable">
+<section id="ccSelectionTable" class="display">
     <table>
-        <form:form method="get" action="/availableCCResults" ><!--modelAttribute="selectedCount"-->
+        <form:form method="GET" action="/availableCCResults" >
+            <input type="submit" value="Search" id="search" />
+        </form:form>
+        <br>
+        <form:form method="POST" action="/releaseCounts" id="cycleCountResults">
+            <input type="submit" name="ReleaseSelectedCounts" value="Release Selected Counts" />
+        <thead>
             <tr>
-                <th><input type="checkbox" /></th>
+                <th><!--<button id="selectAllCheckbox" onclick="test()"/>Select All--></th>
                 <th>Client</th>
                 <th>SKU</th>
                 <th>Lot</th>
@@ -34,7 +35,7 @@
                 <th>Days Since Last Count</th>
             </tr>
             <tr>
-                <th><input type="submit" value="Search" id="search" /></th>
+                <th></th>
                 <th><input path="client" type="text"/></th>
                 <th><input path="skuLotLocPK.sku" type="text" /></th>
                 <th><input path="skuLotLocPK.lot" type="text" /></th>
@@ -44,12 +45,12 @@
                 <th><input path="clientSkuCcInfo.abc.days" type="text" /></th>
                 <th><input path="clientSkuCcInfo.daysSinceLastCount" type="text" /></th>
             </tr>
-        </form:form>
+        </thead>
         <c:if test="${!empty(onHandList)}">
             <section>
                 <c:forEach items="${onHandList}" var="onHand" >
                     <tr>
-                        <td><input type="checkbox" /></td>
+                        <td><input type="checkbox" name="ids[]" id="selectCheckBox" value="${onHand.skuLotLocPK.sku}"/></td>
                         <td>${onHand.client}</td>
                         <td>${onHand.skuLotLocPK.sku}</td>
                         <td>${onHand.skuLotLocPK.lot}</td>
@@ -62,8 +63,10 @@
                 </c:forEach>
             </section>
         </c:if>
+        </form:form>
     </table>
 </section>
 
 </body>
+    <script type="text/javascript" src="/js/app.js" />
 </html>

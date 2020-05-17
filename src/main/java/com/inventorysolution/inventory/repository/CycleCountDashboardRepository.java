@@ -1,8 +1,8 @@
 package com.inventorysolution.inventory.repository;
 
-import com.inventorysolution.inventory.beans.ClientSkuCcInfo;
+import com.inventorysolution.inventory.model.ClientSkuCcInfo;
 //import com.inventorysolution.inventory.beans.CycleCountDashboard;
-import com.inventorysolution.inventory.beans.compositeId.StorerSkuPK;
+import com.inventorysolution.inventory.model.compositeId.StorerSkuPK;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
