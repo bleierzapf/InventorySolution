@@ -1,5 +1,8 @@
 package com.inventorysolution.inventory.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
@@ -11,6 +14,9 @@ import java.util.Date;
 
 @Entity(name = "ClientSkuCcInfo")
 @Table(name = "SKU")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClientSkuCcInfo implements Serializable {
 
     @Id
@@ -29,35 +35,14 @@ public class ClientSkuCcInfo implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Timestamp lastCcReleaseDate;
 
-    public int getSerialKey() { return serialKey; }
-    public void setSerialKey(int serialKey) { this.serialKey = serialKey; }
-
-    public int getStorerKey() { return storerKey; }
-    public void setStorerKey(int storerKey) { this.storerKey = storerKey; }
-
-    public String getSku() { return sku; }
-    public void setSku(String sku) { this.sku = sku; }
-
-    public Timestamp getLastCycleCount() { return lastCycleCount; }
-    public void setLastCycleCount(Timestamp lastCycleCount) { this.lastCycleCount = lastCycleCount; }
-
-    public Timestamp getLastCcReleaseDate() { return lastCcReleaseDate; }
-    public void setLastCcReleaseDate(Timestamp lastCcReleaseDate) { this.lastCcReleaseDate = lastCcReleaseDate; }
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns({
             @JoinColumn(name = "abc", referencedColumnName = "abc", insertable = false, updatable = false),
     })
     private ABC abc;
 
-    public ABC getAbc() { return abc; }
-    public void setAbc(ABC abc) { this.abc = abc; }
-
     @Formula("calcDaysSinceLastCount")
     transient long daysSinceLastCount;
-
-    public long getDaysSinceLastCount() { return daysSinceLastCount; }
-    public void setDaysSinceLastCount(long daysSinceLastCount) { this.daysSinceLastCount = daysSinceLastCount; }
 
     @PostLoad
     protected void calcDaysSinceLastCount(){

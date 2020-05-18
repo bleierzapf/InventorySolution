@@ -18,10 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping(value="/tasks")
 public class TasksController {
-/*
-    @Autowired
-    DataSource dataSource;
-*/
+
     @Autowired
     private TasksService tasksService;
 

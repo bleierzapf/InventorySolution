@@ -1,23 +1,23 @@
 package com.inventorysolution.inventory.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
-@Entity
+@Entity(name="ABC")
+@Table(name="ABC")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ABC implements Serializable {
 
     @Id
     private int serialKey;
     private String abc;
     private int days;
-
-    public int getSerialKey() { return serialKey; }
-    public void setSerialKey(int serialKey) { this.serialKey = serialKey; }
-
-    public String getAbc() { return abc; }
-    public void setAbc(String abc) { this.abc = abc; }
-
-    public int getDays() { return days; }
-    public void setDays(int days) { this.days = days; }
 }

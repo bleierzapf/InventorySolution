@@ -62,6 +62,12 @@ public class NavigationController {
         return "tasks";
     }
 
+    @GetMapping("/mobileInterface")
+    public String mobileInterface(){
+        System.out.println("Load Mobile Interface");
+        return "mobile/mobileInterface";
+    }
+
     @ModelAttribute("selectedCount")
     public InvOnHand getCycleCountValues() {
         return new InvOnHand();

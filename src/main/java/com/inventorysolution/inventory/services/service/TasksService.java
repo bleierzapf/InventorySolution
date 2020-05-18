@@ -12,9 +12,14 @@ import java.sql.Date;
 public interface TasksService {
     Iterable<Tasks> allTasks();
 
-    int skuInPending(String sku);
-
     @Transactional
     int insertNewTask(String sku, int qty, String loc, int client, int lot);
+
+    // Overload Cycle Count Tasks for Mobile Filter
+    Iterable<Tasks> cycleCountIterableTask();
+    Iterable<Tasks> cycleCountIterableTask(int filterClient);
+    //Iterable<Tasks> cycleCountIterableTask01(String filterLocSql);
+    //Iterable<Tasks> cycleCountIterableTask11(int filterClient, String filterLocSql);
+    // Overload Cycle Count Tasks for Mobile Filter
 
 }

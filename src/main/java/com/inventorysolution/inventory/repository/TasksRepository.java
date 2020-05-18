@@ -15,16 +15,29 @@ import java.sql.Timestamp;
 @Repository
 public interface TasksRepository extends CrudRepository<Tasks, StorerSkuPK> {
 
-    @Query("SELECT t FROM Tasks t WHERE t.status = 'Pending'")
+    @Query("SELECT t FROM Tasks t WHERE t.status = 'Pending' ORDER BY t.priority, t.skuLotLocPK.loc ASC")
     Iterable<Tasks> allTasks();
-
-    @Query("SELECT COUNT(t.status) FROM Tasks t WHERE t.skuLotLocPK.sku = :inputSku AND t.status = 'Pending'")
-    int skuInPending(@Param("inputSku") String inputSku);
 
     @Modifying
     @Query(value = "INSERT INTO Tasks (TaskType, Status, Sku, Priority, Quantity, Loc, StartTime, EndTime, Storer, Lot) " +
             "VALUES('Cycle Counts', 'Pending', :iSku, '1 - Highest Priority', :iQty, :iLoc, :iTimestamp, :iTimestamp, :iClient, :iLot)", nativeQuery = true)
     int insertNewTask(@Param("iSku") String iSku, @Param("iQty") int iQty, @Param("iLoc") String iLoc,
                       @Param("iClient") int iClient, @Param("iLot") int iLot, @Param("iTimestamp") Timestamp iTimestamp);
+
+    // Overload Cycle Count Tasks for Mobile Filter
+    @Query("SELECT t FROM Tasks t WHERE t.status = 'Pending' ORDER BY t.priority, t.skuLotLocPK.loc ASC")
+    Iterable<Tasks> cycleCountIterableTask();
+
+    @Query("SELECT t FROM Tasks t WHERE t.status = 'Pending' AND t.storerKey = :filterClient ORDER BY t.priority, t.skuLotLocPK.loc ASC")
+    Iterable<Tasks> cycleCountIterableTask(@Param("filterClient") int filterClient);
+
+    /*
+    @Query("SELECT t FROM Tasks t WHERE :filterLocSql")
+    Iterable<Tasks> cycleCountIterableTask01(@Param("filterLocSql") String filterLocSql);
+
+    @Query("SELECT t FROM Tasks t WHERE t.storerKey = :filterClient AND :filterLocSql")
+    Iterable<Tasks> cycleCountIterableTask11(@Param("filterClient") int filterClient, @Param("filterLocSql") String filterLocSql);
+    // Overload Cycle Count Tasks for Mobile Filter
+     */
 
 }

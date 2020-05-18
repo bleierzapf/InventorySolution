@@ -21,6 +21,7 @@
                 </div> <!-- dropdown menu -->
             </div> <!-- dropdown -->
             <a href="/tasks/viewAllTasks">Tasks</a>
+            <a onclick="window.open('/mobileInterface', 'Mobile Client','width=400,height=650')">Mobile Interface</a>
             <a href="/settings">Settings</a>
         </div> <!-- navbar -->
         <div class="logo">
