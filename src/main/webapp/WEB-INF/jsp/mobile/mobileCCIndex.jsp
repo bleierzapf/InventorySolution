@@ -11,7 +11,7 @@
         <div class="mobile-container">
         <%@ include file="mobileNavigation.jsp"%>
             <div class="cycleCountFilter">
-            <form:form method="GET" action="/mobile/mobileCount">
+            <form:form method="GET" action="mobileStartCount" > <!-- modelAttribute="countParameters" -->
                 <label>Search For Available Counts</label> <br />
                 <label>Section: </label><input type="search" name="iSection" value="*" /> <i>Disabled</i> <br />
                 <label>Facility: </label><input type="search" name="iFacility" value="*" /> <i>Disabled</i> <br />

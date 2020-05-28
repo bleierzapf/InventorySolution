@@ -4,16 +4,13 @@ import com.inventorysolution.inventory.model.Tasks;
 import com.inventorysolution.inventory.repository.TasksRepository;
 import com.inventorysolution.inventory.services.service.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -35,19 +32,20 @@ public class TasksImpl implements TasksService {
     public Iterable<Tasks> allTasks(){ return tasksRepository.allTasks(); }
 
     @Override
-    public int insertNewTask(String sku, int qty, String loc, int client, int lot) {
+    public int insertNewTask(@RequestParam String sku, @RequestParam int qty, @RequestParam String loc,
+                             @RequestParam int client, @RequestParam String lot) {
         return tasksRepository.insertNewTask(sku, qty, loc, client, lot, this.timestamp);
     }
 
     // Overload Cycle Count Tasks for Mobile Filter
     @Override
-    public Iterable<Tasks> cycleCountIterableTask() {
-        return tasksRepository.cycleCountIterableTask();
+    public Tasks cycleCountTask() {
+        return tasksRepository.cycleCountTask();
     }
 
     @Override
-    public Iterable<Tasks> cycleCountIterableTask(int filterClient) {
-        return tasksRepository.cycleCountIterableTask(filterClient);
+    public Tasks cycleCountTask(@RequestParam("filterClient") int filterClient) {
+        return tasksRepository.cycleCountTask(filterClient);
     }
 /*
     @Override
@@ -62,5 +60,14 @@ public class TasksImpl implements TasksService {
  */
     // Overload Cycle Count Tasks for Mobile Filter
 
+    @Override
+    public int updateTaskUserName(@RequestParam String iUserName, @RequestParam int iTask){
+        return tasksRepository.updateTaskUserName(iUserName, iTask, this.timestamp);
+    };
+
+    @Override
+    public int postCompletedTask(@RequestParam int iTask){
+        return tasksRepository.postCompletedTask(iTask, this.timestamp);
+    };
 
 }

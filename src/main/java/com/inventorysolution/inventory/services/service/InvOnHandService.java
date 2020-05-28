@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @Service("invOnHandService")
 public interface InvOnHandService {
-    public Iterable<InvOnHand> invWithCycleCount();
+    Iterable<InvOnHand> invWithCycleCount();
 
-    public ArrayList<InvOnHand> invToCount(String sku);
+    ArrayList<InvOnHand> invToCount(String sku);
 }

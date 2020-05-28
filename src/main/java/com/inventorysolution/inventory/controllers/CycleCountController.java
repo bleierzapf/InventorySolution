@@ -22,10 +22,7 @@ import java.util.List;
 
 @Controller
 public class CycleCountController {
-/*
-    @Autowired
-    DataSource dataSource;
-*/
+
     @Autowired
     private InvOnHandService invOnHandService;
 
@@ -63,18 +60,4 @@ public class CycleCountController {
         return "redirect:/availableCCResults";
     }
 
-    /*
-
-    @Autowired
-    private SkuRepository skuRepository;
-
-    @GetMapping("/displayDashboard")
-    public String displayDashboard(Sku sku, Model model){
-        System.out.println("Display Dashboard");
-
-        List<Sku> skuList = new ArrayList<>();
-        skuList = skuRepository.getAllSkuTable();
-        model.addAttribute("skuList", skuList);
-        return "dashboard";
-    }*/
 }

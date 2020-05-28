@@ -13,13 +13,19 @@
     <c:if test="${empty(taskToCount)}">
         <h4>No Available Counts</h4>
     </c:if>
-    <c:if test="${!empty(taskToCount)}">
-        <section>
-            <c:forEach items="${taskToCount}" var="countTask">
-                <tr><td>${countTask.skuLotLocPK.loc}</td></tr>
-            </c:forEach>
-        </section>
-    </c:if>
+    <form:form action="mobileCountValidation">
+        <c:if test="${!empty(taskToCount)}">
+            <Label>SKU: </Label><c:out value="${taskToCount.skuLotLocPK.sku}" /> <br />
+            <Label>LOC: </Label><c:out value="${taskToCount.skuLotLocPK.loc}" /> <br />
+            <Label>LOT: </Label><c:out value="${taskToCount.skuLotLocPK.lot}" /> <br />
+            <Label>QTY: </Label><c:out value="${taskToCount.qty}" /> <br />
+            <Label>-----------------------------------------------------</Label> <br>
+            <Label>LOC: </Label><input type="search" name="iLoc" /> <br />
+            <Label>LOT: </Label><input type="search" name="iLot" /> <br />
+            <Label>QTY: </Label><input type="search" name="iQty" /> <br />
+            <input type="submit" value="Search" />
+        </c:if>
+    </form:form>
 </div>
 </body>
 </html>

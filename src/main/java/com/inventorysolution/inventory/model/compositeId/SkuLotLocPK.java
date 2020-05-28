@@ -10,14 +10,14 @@ public class SkuLotLocPK implements Serializable {
     @Column(name = "sku")
     private String sku;
     @Column(name = "lot")
-    private int lot;
+    private String lot;
     @Column(name = "loc")
     private String loc;
 
     public SkuLotLocPK(){
     }
 
-    public SkuLotLocPK(String sku, int lot, String loc){
+    public SkuLotLocPK(String sku, String lot, String loc){
         this.sku = sku;
         this.lot = lot;
         this.loc = loc;
@@ -26,8 +26,8 @@ public class SkuLotLocPK implements Serializable {
     public String getSku() { return sku; }
     public void setSku(String sku) { this.sku = sku; }
 
-    public int getLot() { return lot; }
-    public void setLot(int lot) { this.lot = lot; }
+    public String getLot() { return lot; }
+    public void setLot(String lot) { this.lot = lot; }
 
     public String getLoc() { return loc; }
     public void setLoc(String loc) { this.loc = loc; }

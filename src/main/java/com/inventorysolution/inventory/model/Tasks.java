@@ -15,10 +15,14 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Tasks {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="TaskNumber")
+    private int taskNumber;
+
     @Column(name="TaskType")
     private String taskType;
 
-    @EmbeddedId
     private SkuLotLocPK skuLotLocPK;
 
     @Column(name="Status")

@@ -27,7 +27,7 @@
                 <th><input type="text" name="modelClient" class="search_init"></th>
             </tr>
         </thead>
-    <display:column title="Select"><input type="checkbox" name="ids[]" value="${skuLotLocPK.sku}" class="tableCheckBox" /></display:column>
+    <display:column title="Select"><input type="checkbox" name="ids[]" property="taskNumber" class="tableCheckBox" /></display:column>
     <display:column property="taskType" title="Task Type" />
     <display:column property="storerKey" title="Client" />
     <display:column property="skuLotLocPK.sku" title="SKU" />

@@ -1,14 +1,11 @@
 package com.inventorysolution.inventory.repository;
 
-import com.inventorysolution.inventory.model.InvOnHand;
 import com.inventorysolution.inventory.model.Tasks;
 import com.inventorysolution.inventory.model.compositeId.StorerSkuPK;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 
@@ -21,15 +18,16 @@ public interface TasksRepository extends CrudRepository<Tasks, StorerSkuPK> {
     @Modifying
     @Query(value = "INSERT INTO Tasks (TaskType, Status, Sku, Priority, Quantity, Loc, StartTime, EndTime, Storer, Lot) " +
             "VALUES('Cycle Counts', 'Pending', :iSku, '1 - Highest Priority', :iQty, :iLoc, :iTimestamp, :iTimestamp, :iClient, :iLot)", nativeQuery = true)
-    int insertNewTask(@Param("iSku") String iSku, @Param("iQty") int iQty, @Param("iLoc") String iLoc,
-                      @Param("iClient") int iClient, @Param("iLot") int iLot, @Param("iTimestamp") Timestamp iTimestamp);
+    int insertNewTask(String iSku, int iQty, String iLoc, int iClient, String iLot, Timestamp iTimestamp);
 
     // Overload Cycle Count Tasks for Mobile Filter
-    @Query("SELECT t FROM Tasks t WHERE t.status = 'Pending' ORDER BY t.priority, t.skuLotLocPK.loc ASC")
-    Iterable<Tasks> cycleCountIterableTask();
+    @Query(value = "SELECT * FROM Tasks t WHERE t.Status = 'Pending' AND t.User = ' ' " +
+            "ORDER BY t.Priority, t.Loc ASC LIMIT 1", nativeQuery = true)
+    Tasks cycleCountTask();
 
-    @Query("SELECT t FROM Tasks t WHERE t.status = 'Pending' AND t.storerKey = :filterClient ORDER BY t.priority, t.skuLotLocPK.loc ASC")
-    Iterable<Tasks> cycleCountIterableTask(@Param("filterClient") int filterClient);
+    @Query(value = "SELECT * FROM Tasks t WHERE t.Status = 'Pending' AND t.User = ' ' AND t.Storer = :filterClient " +
+            "ORDER BY t.Priority, t.Loc ASC LIMIT 1", nativeQuery = true)
+    Tasks cycleCountTask(int filterClient);
 
     /*
     @Query("SELECT t FROM Tasks t WHERE :filterLocSql")
@@ -40,4 +38,11 @@ public interface TasksRepository extends CrudRepository<Tasks, StorerSkuPK> {
     // Overload Cycle Count Tasks for Mobile Filter
      */
 
+    @Modifying
+    @Query(value = "UPDATE Tasks SET Status = 'In Process', User = :iUserName , StartTime = :iTimestamp WHERE TaskNumber = :iTask", nativeQuery = true)
+    int updateTaskUserName(String iUserName, int iTask, Timestamp iTimestamp);
+
+    @Modifying
+    @Query(value = "UPDATE Tasks SET Status = 'Completed', EndTime = :iTimestamp WHERE TaskNumber = :iTask", nativeQuery = true)
+    int postCompletedTask(int iTask, Timestamp iTimestamp);
 }
