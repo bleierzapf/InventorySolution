@@ -20,10 +20,22 @@
             <Label>LOT: </Label><c:out value="${taskToCount.skuLotLocPK.lot}" /> <br />
             <Label>QTY: </Label><c:out value="${taskToCount.qty}" /> <br />
             <Label>-----------------------------------------------------</Label> <br>
+            <c:if test="${!empty(errorLoc)}">
+                <c:out value="${errorLoc}" /> <br />
+            </c:if>
             <Label>LOC: </Label><input type="search" name="iLoc" /> <br />
+            <c:if test="${!empty(errorLot)}">
+                <c:out value="${errorLot}" /> <br />
+            </c:if>
             <Label>LOT: </Label><input type="search" name="iLot" /> <br />
+            <c:if test="${!empty(errorQty)}">
+                <c:out value="${errorQty}" /> <br />
+            </c:if>
             <Label>QTY: </Label><input type="search" name="iQty" /> <br />
-            <input type="submit" value="Search" />
+            <input type="submit" value="Submit" />
+            <c:if test="${!(empty(errorLoc) && empty(errorLot) && empty(errorQty))}">
+                <input type="submit" value="Confirm Variance" />
+            </c:if>
         </c:if>
     </form:form>
 </div>

@@ -1,45 +1,50 @@
 package com.inventorysolution.inventory.controllers;
 
 import com.inventorysolution.inventory.model.InvOnHand;
-import com.inventorysolution.inventory.repository.InvOnHandRepository;
+import com.inventorysolution.inventory.services.service.InvOnHandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.sql.DataSource;
+import java.util.HashMap;
 
 @Controller
 public class DashboardController {
-
+    
     @Autowired
-    DataSource dataSource;
-
-    @Autowired
-    private InvOnHandRepository invOnHandRepository;
+    private InvOnHandService invOnHandService;
 
     @RequestMapping(value = "displayDashboard", method = RequestMethod.GET)
-    public String displayDashboard(InvOnHand invOnHand, Model model){
+    public ModelAndView displayDashboard(){
         System.out.println("Display Dashboard");
+        ModelAndView mav = new ModelAndView();
 
-        Iterable<InvOnHand> onHandList = invOnHandRepository.findAll();
-        model.addAttribute("onHandList", onHandList);
-        return "dashboard";
+        int delinquent = 0;
+        int onTime = 0;
+        int noPastCount = 0;
+        Iterable<InvOnHand> allCCData = invOnHandService.findall();
+
+        for (InvOnHand cc : allCCData) {
+            try{
+                if(cc.getClientSkuCcInfo().getDaysCountOverdue() >= 0) {
+                    onTime++;
+                } else {
+                    delinquent++; }
+            } catch (NullPointerException e) {
+                noPastCount++;
+            }
+        }
+        HashMap<String, Integer> onTimeChartNumbers = new HashMap<>();
+        onTimeChartNumbers.put("On Time", onTime);
+        onTimeChartNumbers.put("Delinquent", delinquent);
+        onTimeChartNumbers.put("Never Counted", noPastCount);
+
+        mav.addObject("ccTimelinessData", onTimeChartNumbers);
+        mav.setViewName("dashboard");
+
+        return mav;
     }
-
-    /*
-
-    @Autowired
-    private SkuRepository skuRepository;
-
-    @GetMapping("/displayDashboard")
-    public String displayDashboard(Sku sku, Model model){
-        System.out.println("Display Dashboard");
-
-        List<Sku> skuList = new ArrayList<>();
-        skuList = skuRepository.getAllSkuTable();
-        model.addAttribute("skuList", skuList);
-        return "dashboard";
-    }*/
+    
 }

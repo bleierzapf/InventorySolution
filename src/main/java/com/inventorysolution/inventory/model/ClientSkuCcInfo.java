@@ -8,7 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -41,14 +40,22 @@ public class ClientSkuCcInfo implements Serializable {
     })
     private ABC abc;
 
+    /*
     @Formula("calcDaysSinceLastCount")
     transient long daysSinceLastCount;
+     */
+
+    @Formula("daysCycleCountOverdueBy")
+    transient long daysCountOverdue;
 
     @PostLoad
-    protected void calcDaysSinceLastCount(){
+    //protected void calcDaysSinceLastCount(){
+    protected void daysCycleCountOverdueBy(){
         //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date date = new Date();
         Timestamp ts = new Timestamp(date.getTime());
-        setDaysSinceLastCount((long) (getLastCycleCount().getTime() - ts.getTime()) / (1000*3500*24));
+        //setDaysSinceLastCount((long) (getLastCycleCount().getTime() - ts.getTime()) / (1000*3500*24));
+        setDaysCountOverdue((long) ((getLastCycleCount().getTime() - ts.getTime()) / (1000*3500*24)) + getAbc().getDays());
     }
+
 }

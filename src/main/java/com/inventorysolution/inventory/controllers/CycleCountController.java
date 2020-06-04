@@ -6,6 +6,7 @@ import com.inventorysolution.inventory.model.compositeId.SkuLotLocPK;
 import com.inventorysolution.inventory.services.service.InvOnHandService;
 import com.inventorysolution.inventory.services.service.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,10 +32,10 @@ public class CycleCountController {
 
     @RequestMapping(value="availableCCResults", method = RequestMethod.GET)
     public ModelAndView availableCCResults(){
-        System.out.println("Cycle Count Release Exclude No Date History");
+        System.out.println("Cycle Count Release");
         ModelAndView mav = new ModelAndView();
         Iterable<InvOnHand> onHandList = invOnHandService.invWithCycleCount();
-        mav.addObject("onHandList", onHandList).setViewName("ccRelease");
+        mav.addObject("ccResults", onHandList).setViewName("ccRelease");
         return mav;
     }
 
@@ -43,6 +44,7 @@ public class CycleCountController {
         List<InvOnHand> invCountArr = new ArrayList<>();
 
         for (String sku: skus) {
+            System.out.println(sku);
             invCountArr.addAll(invOnHandService.invToCount(sku));
             System.out.println(sku + " added to count list.");
         }

@@ -31,19 +31,4 @@ public class TasksController {
         mav.addObject("allTasks", allTasks).setViewName("tasks");
         return mav;
     }
-
-    /*
-
-    @Autowired
-    private SkuRepository skuRepository;
-
-    @GetMapping("/displayDashboard")
-    public String displayDashboard(Sku sku, Model model){
-        System.out.println("Display Dashboard");
-
-        List<Sku> skuList = new ArrayList<>();
-        skuList = skuRepository.getAllSkuTable();
-        model.addAttribute("skuList", skuList);
-        return "dashboard";
-    }*/
 }

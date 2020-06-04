@@ -40,7 +40,7 @@ public class MobileController {
 
     MobileCCVariables curCount = new MobileCCVariables();
 
-    @GetMapping("/mobileStartCount")
+    @GetMapping(value="/mobileStartCount")
     public String mobileCount(@Valid @ModelAttribute("countParameters") MobileCCVariables mCCvar, BindingResult result,
                               @Param("iSection") String iSection,
                               @Param("iFacility") String iFacility,
@@ -57,11 +57,14 @@ public class MobileController {
 
     @GetMapping("/mobileCount")
     public ModelAndView mobileCount() {
-
         ModelAndView mav = new ModelAndView();
-        getCurrentCount();
-        mav.addObject("taskToCount", curCount.getCurCount()).setViewName("mobile/mobileCount");
 
+        if(curCount.getInputError() == null) {
+            getCurrentCount();
+        } else {
+            curCount.getInputError().forEach((k,v) -> mav.addObject(k, v));
+        }
+        mav.addObject("taskToCount", curCount.getCurCount()).setViewName("mobile/mobileCount");
         return mav;
     }
 
@@ -82,28 +85,34 @@ public class MobileController {
 
         HashMap<String, String> countError = new HashMap<>();
         if(!iLoc.equals(curCount.getCurCount().getSkuLotLocPK().getLoc())){
-            countError.put("Loc", "Wrong Location: " + iLoc + " vs " + curCount.getCurCount().getSkuLotLocPK().getLoc());
+            countError.put("errorLoc", "Wrong Location");
         }
         if(!iLot.equals(curCount.getCurCount().getSkuLotLocPK().getLot())){
-            countError.put("Lot", "Wrong Lot Value: " + iLoc + " vs " + curCount.getCurCount().getSkuLotLocPK().getLot());
+            countError.put("errorLot", "Wrong Lot Value");
         }
         if(iQty != curCount.getCurCount().getQty()){
             if(iQty > curCount.getCurCount().getQty()){
-                countError.put("Qty", "Count > System");
-            } else { countError.put("Qty", "Count < System"); }
+                countError.put("errorQty", "Count > System");
+            } else { countError.put("errorQty", "Count < System"); }
         }
 
         if(countError.size() == 0){
             System.out.println("Post Count");
             // No Errors In Count - Post and Move Onto Next Count
+            // Completes Task In Task Table
             tasksService.postCompletedTask(curCount.getCurCount().getTaskNumber());
+            // Posts Completed Count in CCDatail Table
             ccDetailService.postCompletedCycleCount(curCount.getCurCount().getStorerKey(), curCount.getCurCount().getSkuLotLocPK().getSku(),
                     curCount.getCurCount().getSkuLotLocPK().getLoc(), "BLEIERZAPF", "Posted", "RF CC Adjustment",
                     curCount.getCurCount().getTaskNumber(), curCount.getCurCount().getSkuLotLocPK().getLot(), curCount.getCurCount().getQty());
-            return "redirect:/mobile/mobileCount";
+            // Sets Error Check To Null If Previous Errors Were Caught
+            if(curCount.getInputError() != null) { curCount.setInputError(null); }
+        } else {
+            System.out.println("Count Validation Error");
+            // Error Found During Validation - Ask User For Recount / Confirmation
+            curCount.setInputError(countError);
         }
-
-        return "redirect:/mobile/mobileStartCount";
+        return "redirect:/mobile/mobileCount";
     }
 
     @ModelAttribute("countParameters")

@@ -17,7 +17,8 @@ public class NavigationController {
     @GetMapping("/dashboard")
     public String dashboard(){
         System.out.println("Load Dashboard");
-        return "dashboard";
+        return "redirect:/displayDashboard";
+        //return "dashboard";
     }
 
     @GetMapping("/settings")

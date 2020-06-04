@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 @Service("invOnHandService")
 public interface InvOnHandService {
+    Iterable<InvOnHand> findall();
+
     Iterable<InvOnHand> invWithCycleCount();
 
     ArrayList<InvOnHand> invToCount(String sku);
