@@ -32,9 +32,9 @@
                 <c:out value="${errorQty}" /> <br />
             </c:if>
             <Label>QTY: </Label><input type="search" name="iQty" /> <br />
-            <input type="submit" value="Submit" />
+            <input type="submit" name="submit" value="Submit" />
             <c:if test="${!(empty(errorLoc) && empty(errorLot) && empty(errorQty))}">
-                <input type="submit" value="Confirm Variance" />
+                <input type="submit" name="submit" value="Confirm Variance" />
             </c:if>
         </c:if>
     </form:form>

@@ -24,7 +24,7 @@ public class TasksController {
 
     @RequestMapping(value="/viewAllTasks", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView viewAllTasks(/*Tasks tasks, Model mode, HttpServletRequest request*/){
+    public ModelAndView viewAllTasks(){
         System.out.println("Display All Tasks");
         ModelAndView mav = new ModelAndView();
         Iterable<Tasks> allTasks = tasksService.allTasks();

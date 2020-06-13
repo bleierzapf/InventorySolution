@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @Controller
 public class NavigationController {
 
-    @GetMapping("/home")
+    @GetMapping("/index")
     public String goHome(){
         System.out.println("Load Index Page");
         return "index";
@@ -18,7 +18,6 @@ public class NavigationController {
     public String dashboard(){
         System.out.println("Load Dashboard");
         return "redirect:/displayDashboard";
-        //return "dashboard";
     }
 
     @GetMapping("/settings")

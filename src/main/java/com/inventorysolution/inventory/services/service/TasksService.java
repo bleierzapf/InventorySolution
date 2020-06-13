@@ -16,7 +16,7 @@ public interface TasksService {
 
     // Overload Cycle Count Tasks for Mobile Filter
     Tasks cycleCountTask();
-    Tasks cycleCountTask(int filterClient);
+    Tasks cycleCountTask(String filterClient);
     //Iterable<Tasks> cycleCountIterableTask01(String filterLocSql);
     //Iterable<Tasks> cycleCountIterableTask11(int filterClient, String filterLocSql);
     // Overload Cycle Count Tasks for Mobile Filter

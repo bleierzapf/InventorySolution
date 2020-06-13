@@ -2,6 +2,7 @@ package com.inventorysolution.inventory.repository;
 
 import com.inventorysolution.inventory.model.InvOnHand;
 import com.inventorysolution.inventory.model.compositeId.StorerSkuPK;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository
-public interface InvOnHandRepository extends CrudRepository<InvOnHand, StorerSkuPK> {
+public interface InvOnHandRepository extends JpaRepository<InvOnHand, StorerSkuPK> {
 
     @Query("SELECT inv FROM InvOnHand inv " +
             "WHERE inv.clientSkuCcInfo.lastCycleCount IS NOT NULL " +

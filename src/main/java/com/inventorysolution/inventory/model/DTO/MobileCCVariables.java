@@ -1,5 +1,6 @@
-package com.inventorysolution.inventory.model;
+package com.inventorysolution.inventory.model.DTO;
 
+import com.inventorysolution.inventory.model.Tasks;
 import lombok.Data;
 
 import java.util.HashMap;

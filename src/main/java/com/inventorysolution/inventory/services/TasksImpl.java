@@ -44,7 +44,7 @@ public class TasksImpl implements TasksService {
     }
 
     @Override
-    public Tasks cycleCountTask(@RequestParam("filterClient") int filterClient) {
+    public Tasks cycleCountTask(@RequestParam("filterClient") String filterClient) {
         return tasksRepository.cycleCountTask(filterClient);
     }
 /*

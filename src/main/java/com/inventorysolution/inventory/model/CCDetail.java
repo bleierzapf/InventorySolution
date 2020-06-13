@@ -45,7 +45,7 @@ public class CCDetail {
     private int taskNumber;
 
     @Column(name = "ReportID")
-    private int reportId;
+    private Integer reportId;
 
     @Column(name = "OrderNumber")
     private String orderNumber;

@@ -4,10 +4,11 @@
 <head>
     <title>LSqrd Solution - Dashboard</title>
     <%@ include file="shared/head.jsp"%>
+    <script type="text/javascript" src="js/dashboard.js"></script>
     <script type="text/javascript">
         window.onload = function(){
             let dps = [];
-            const chart = new CanvasJS.Chart("chartContainer", {
+            const pieChart = new CanvasJS.Chart("pieChartContainer", {
                 animationEnabled: true,
                 title: {
                     text: "Count Timeliness"
@@ -30,7 +31,7 @@
                 dps.push({label: gLabel, y: yValue});
             </c:forEach>
 
-            chart.render();
+            pieChart.render();
         }
     </script>
 </head>
@@ -43,7 +44,7 @@
 
 <b>Dashboard</b>
 
-<div id="chartContainer" style="height: 370px; max-width: 370px; margin: 0px auto;"></div>
+<div id="pieChartContainer" style="height: 370px; max-width: 500px; margin: 0px auto;"></div>
 <script src="js/canvasjs.min.js"></script>
 </body>
 </html>

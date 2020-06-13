@@ -1,7 +1,6 @@
 package com.inventorysolution.inventory.controllers;
 
-import com.inventorysolution.inventory.model.CCDetail;
-import com.inventorysolution.inventory.model.MobileCCVariables;
+import com.inventorysolution.inventory.model.DTO.MobileCCVariables;
 import com.inventorysolution.inventory.services.service.CCDetailService;
 import com.inventorysolution.inventory.services.service.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -38,19 +38,19 @@ public class MobileController {
         return "mobile/mobileCCIndex";
     }
 
-    MobileCCVariables curCount = new MobileCCVariables();
+    MobileCCVariables currentCount = new MobileCCVariables();
 
     @GetMapping(value="/mobileStartCount")
     public String mobileCount(@Valid @ModelAttribute("countParameters") MobileCCVariables mCCvar, BindingResult result,
                               @Param("iSection") String iSection,
                               @Param("iFacility") String iFacility,
                               @Param("iZone") String iZone,
-                              @Param("iClient") String iClient) //parse to int if not *
+                              @Param("iClient") String iClient)
     {
-        curCount.setSection(iSection);
-        curCount.setFacility(iFacility);
-        curCount.setZone(iZone);
-        curCount.setClient(iClient);
+        currentCount.setSection(iSection);
+        currentCount.setFacility(iFacility);
+        currentCount.setZone(iZone);
+        currentCount.setClient(iClient);
 
         return "redirect:/mobile/mobileCount";
     }
@@ -59,60 +59,70 @@ public class MobileController {
     public ModelAndView mobileCount() {
         ModelAndView mav = new ModelAndView();
 
-        if(curCount.getInputError() == null) {
+        if(currentCount.getInputError() == null) {
             getCurrentCount();
         } else {
-            curCount.getInputError().forEach((k,v) -> mav.addObject(k, v));
+            currentCount.getInputError().forEach((k,v) -> mav.addObject(k, v));
         }
-        mav.addObject("taskToCount", curCount.getCurCount()).setViewName("mobile/mobileCount");
+        mav.addObject("taskToCount", currentCount.getCurCount()).setViewName("mobile/mobileCount");
         return mav;
     }
 
 
     private void getCurrentCount(){
-        if(!curCount.getClient().equals("*")){
-            curCount.setCurCount(tasksService.cycleCountTask(Integer.parseInt(curCount.getClient())));
-        } else { curCount.setCurCount(tasksService.cycleCountTask()); }
+        if(!currentCount.getClient().equals("*")){
+            currentCount.setCurCount(tasksService.cycleCountTask(currentCount.getClient()));
+        } else { currentCount.setCurCount(tasksService.cycleCountTask()); }
 
-        tasksService.updateTaskUserName("BLEIERZAPF", curCount.getCurCount().getTaskNumber());
+        try{
+            tasksService.updateTaskUserName("BLEIERZAPF", currentCount.getCurCount().getTaskNumber());
+        } catch (NullPointerException e ){ return; }
     }
 
     @RequestMapping("/mobileCountValidation")
-    public String mobileCountValidation(@Param("iLoc") String iLoc,
-                                         @Param("iLot") String iLot,
-                                         @Param("iQty") int iQty) {
+    public String mobileCountValidation(@RequestParam("submit") String iSub,
+                                        @Param("iLoc") String iLoc,
+                                        @Param("iLot") String iLot,
+                                        @Param("iQty") int iQty) {
         System.out.println("Mobile Count Check Controller");
 
         HashMap<String, String> countError = new HashMap<>();
-        if(!iLoc.equals(curCount.getCurCount().getSkuLotLocPK().getLoc())){
+        if(!iLoc.equals(currentCount.getCurCount().getSkuLotLocPK().getLoc())){
             countError.put("errorLoc", "Wrong Location");
         }
-        if(!iLot.equals(curCount.getCurCount().getSkuLotLocPK().getLot())){
+        if(!iLot.equals(currentCount.getCurCount().getSkuLotLocPK().getLot())){
             countError.put("errorLot", "Wrong Lot Value");
         }
-        if(iQty != curCount.getCurCount().getQty()){
-            if(iQty > curCount.getCurCount().getQty()){
+        if(iQty != currentCount.getCurCount().getQty()){
+            if(iQty > currentCount.getCurCount().getQty()){
                 countError.put("errorQty", "Count > System");
             } else { countError.put("errorQty", "Count < System"); }
         }
 
         if(countError.size() == 0){
             System.out.println("Post Count");
-            // No Errors In Count - Post and Move Onto Next Count
-            // Completes Task In Task Table
-            tasksService.postCompletedTask(curCount.getCurCount().getTaskNumber());
-            // Posts Completed Count in CCDatail Table
-            ccDetailService.postCompletedCycleCount(curCount.getCurCount().getStorerKey(), curCount.getCurCount().getSkuLotLocPK().getSku(),
-                    curCount.getCurCount().getSkuLotLocPK().getLoc(), "BLEIERZAPF", "Posted", "RF CC Adjustment",
-                    curCount.getCurCount().getTaskNumber(), curCount.getCurCount().getSkuLotLocPK().getLot(), curCount.getCurCount().getQty());
-            // Sets Error Check To Null If Previous Errors Were Caught
-            if(curCount.getInputError() != null) { curCount.setInputError(null); }
+            postCount("Posted", iLoc, iLot, iQty);
+        } else if(iSub.equals("Confirm Variance")) {
+            System.out.println("Post Variance");
+            postCount("Out of Variance", iLoc, iLot, iQty);
         } else {
             System.out.println("Count Validation Error");
             // Error Found During Validation - Ask User For Recount / Confirmation
-            curCount.setInputError(countError);
+            currentCount.setInputError(countError);
         }
         return "redirect:/mobile/mobileCount";
+    }
+
+    private void postCount(String status, String iLoc, String iLot, int iQty){
+        // No Errors In Count - Post and Move Onto Next Count
+        // Completes Task In Task Table
+        tasksService.postCompletedTask(currentCount.getCurCount().getTaskNumber());
+        // Posts Completed Count in CCDatail Table
+        ccDetailService.postCompletedCycleCount(currentCount.getCurCount().getStorerKey(), currentCount.getCurCount().getSkuLotLocPK().getSku(),
+                iLoc, "BLEIERZAPF", status, "RF CC Adjustment",
+                currentCount.getCurCount().getTaskNumber(), iLot, iQty);
+        // Sets Error Check To Null If Previous Errors Were Caught
+        if(currentCount.getInputError() != null) { currentCount.setInputError(null); }
     }
 
     @ModelAttribute("countParameters")
